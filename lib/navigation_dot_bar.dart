@@ -39,17 +39,21 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar>{
 
   @override
   Widget build(BuildContext context) => Container (
-    padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+    // Make it align with bottom of screen
+    padding: EdgeInsets.fromLTRB(2, 3, 2, 0),
     child: Material(
         elevation: 5,
-        borderRadius: BorderRadius.circular(10),
+        // Make it a bit curved top
+        borderRadius: BorderRadius.only(
+                topRight: Radius.circular(40.0),
+                topLeft: Radius.circular(40.0)),
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: EdgeInsets.symmetric(vertical: 10),
           child: Stack(
             key: _keyBottomBar,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.only(bottom: 8, top: 1),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: _createNavigationIconButtonList(widget.items.asMap())
@@ -69,7 +73,7 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar>{
   );
 
   List<_NavigationIconButton> _createNavigationIconButtonList(Map<int, BottomNavigationDotBarItem> mapItem){
-    List<_NavigationIconButton> children = List<_NavigationIconButton>();
+    List<_NavigationIconButton> children = [];
     mapItem.forEach((index, item) =>
         children.add(_NavigationIconButton(item.icon, (index == _indexPageSelected) ? _activeColor : _color,item.onTap,() { _changeOptionBottomBar(index); }))
     );
@@ -143,7 +147,7 @@ class _NavigationIconButtonState extends State<_NavigationIconButton> with Singl
           child: AnimatedOpacity(
               opacity: _opacityIcon,
               duration: Duration(milliseconds: 200),
-              child: Icon(widget._icon, color: widget._colorIcon)
+              child: Icon(widget._icon, color: widget._colorIcon, size:20.0)
           )
       )
   );
