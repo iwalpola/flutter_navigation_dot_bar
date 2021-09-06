@@ -10,7 +10,13 @@ Add the dependency to your project, by editing the pubspec.yaml file.
 
 ````
   dependencies:
-    navigation_dot_bar: ^0.1.3
+    navigation_dot_bar:
+      git: git://github.com/iwalpola/flutter_navigation_dot_bar.git
+````
+Run
+
+````
+  flutter packages get
 ````
 Import the library to your project:
 ````
