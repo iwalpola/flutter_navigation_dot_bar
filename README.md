@@ -23,7 +23,7 @@ Scaffold(
   body: Container(),
   bottomNavigationBar: BottomNavigationDotBar ( // Use -> "BottomNavigationDotBar"
       items: <BottomNavigationDotBarItem>[
-        BottomNavigationDotBarItem(icon: Icons.map, onTap: () { /* Any function - [open new screen] */ }),
+        BottomNavigationDotBarItem(icon: Icons.map, onTap: () { /* Any function - [open new screen] */ }, size:22.0), //optional size parameter (type double)
         BottomNavigationDotBarItem(icon: Icons.alarm_add, onTap: () { /* Any function - [open new screen] */ }),
         BottomNavigationDotBarItem(icon: Icons.timer, onTap: () { /* Any function - [open new screen] */ }),
         ...
