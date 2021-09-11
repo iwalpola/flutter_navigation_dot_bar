@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class BottomNavigationDotBar extends StatefulWidget {
   final List<BottomNavigationDotBarItem> items;
-  final Color activeColor;
-  final Color color;
+  final Color? activeColor;
+  final Color? color;
 
   const BottomNavigationDotBar(
-      {@required this.items, this.activeColor, this.color, Key key})
+      {required this.items, this.activeColor, this.color, Key? key})
       : super(key: key);
 
   @override
@@ -17,13 +17,13 @@ class BottomNavigationDotBar extends StatefulWidget {
 
 class _BottomNavigationDotBarState extends State<BottomNavigationDotBar> {
   GlobalKey _keyBottomBar = GlobalKey();
-  double _numPositionBase, _numDifferenceBase, _positionLeftIndicatorDot;
+  double? _numPositionBase, _numDifferenceBase, _positionLeftIndicatorDot;
   int _indexPageSelected = 0;
-  Color _color, _activeColor;
+  Color? _color, _activeColor;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+    WidgetsBinding.instance!.addPostFrameCallback(_afterLayout);
     super.initState();
   }
 
@@ -31,11 +31,11 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar> {
     _color = widget.color ?? Colors.black45;
     _activeColor = widget.activeColor ?? Theme.of(context).primaryColor;
     final sizeBottomBar =
-        (_keyBottomBar.currentContext.findRenderObject() as RenderBox).size;
+        (_keyBottomBar.currentContext!.findRenderObject() as RenderBox).size;
     _numPositionBase = ((sizeBottomBar.width / widget.items.length));
-    _numDifferenceBase = (_numPositionBase - (_numPositionBase / 2) + 2);
+    _numDifferenceBase = (_numPositionBase! - (_numPositionBase! / 2) + 2);
     setState(() {
-      _positionLeftIndicatorDot = _numPositionBase - _numDifferenceBase;
+      _positionLeftIndicatorDot = _numPositionBase! - _numDifferenceBase!;
     });
   }
 
@@ -90,7 +90,7 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar> {
     if (indexPageSelected != _indexPageSelected) {
       setState(() {
         _positionLeftIndicatorDot =
-            (_numPositionBase * (indexPageSelected + 1)) - _numDifferenceBase;
+            (_numPositionBase! * (indexPageSelected + 1)) - _numDifferenceBase!;
       });
       _indexPageSelected = indexPageSelected;
     }
@@ -99,25 +99,24 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar> {
 
 class BottomNavigationDotBarItem {
   final IconData icon;
-  final NavigationIconButtonTapCallback onTap;
-  final double iconSize;
+  final NavigationIconButtonTapCallback? onTap;
+  final double? iconSize;
   const BottomNavigationDotBarItem(
-      {@required this.icon, this.onTap, this.iconSize})
-      : assert(icon != null);
+      {required this.icon, this.onTap, this.iconSize});
 }
 
 typedef NavigationIconButtonTapCallback = void Function();
 
 class _NavigationIconButton extends StatefulWidget {
-  final double iconSize;
+  final double? iconSize;
   final IconData _icon;
-  final Color _colorIcon;
-  final NavigationIconButtonTapCallback _onTapInternalButton;
+  final Color? _colorIcon;
+  final NavigationIconButtonTapCallback? _onTapInternalButton;
   final NavigationIconButtonTapCallback _onTapExternalButton;
 
   const _NavigationIconButton(this._icon, this._colorIcon, this.iconSize,
       this._onTapInternalButton, this._onTapExternalButton,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -126,8 +125,8 @@ class _NavigationIconButton extends StatefulWidget {
 
 class _NavigationIconButtonState extends State<_NavigationIconButton>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation _scaleAnimation;
+  late AnimationController _controller;
+  late Animation _scaleAnimation;
   double _opacityIcon = 1;
 
   @override
@@ -159,11 +158,11 @@ class _NavigationIconButtonState extends State<_NavigationIconButton>
         });
       },
       onTap: () {
-        widget._onTapInternalButton();
+        widget._onTapInternalButton!();
         widget._onTapExternalButton();
       },
       child: ScaleTransition(
-          scale: _scaleAnimation,
+          scale: _scaleAnimation as Animation<double>,
           child: AnimatedOpacity(
               opacity: _opacityIcon,
               duration: Duration(milliseconds: 200),
